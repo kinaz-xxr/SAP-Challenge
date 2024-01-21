@@ -5,7 +5,6 @@ import IFile from "../../types/file";
 import Services from "../../services/services";
 import ServicesImpl from "../../services/services";
 import styles from "./UploadFile.module.scss";
-import { Data } from "../../types/data";
 
 // component to upload the csv file
 const UploadFile = () => {
