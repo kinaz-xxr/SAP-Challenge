@@ -1,6 +1,6 @@
 import http from "../http-common";
-import sendDataProps from "../types/data";
-import Data from "../types/data";
+import { sendDataProps } from "../types/data";
+import { Data } from "../types/data";
 
 // rest services
 export interface Services {
@@ -40,6 +40,7 @@ class ServicesImpl implements Services {
             onUploadProgress,
         });
     };
+    
     getFiles(): Promise<any> {
         return http.get("/files");
     };

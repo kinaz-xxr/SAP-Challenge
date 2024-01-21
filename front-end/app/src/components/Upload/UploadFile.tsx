@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useLoadingContext } from "../../context/LoadingContext";
 import CircularProgress from "@mui/material/CircularProgress";
 import IFile from "../../types/file";
 import Services from "../../services/services";
 import ServicesImpl from "../../services/services";
-import styles from './UploadFile.module.scss';
+import styles from "./UploadFile.module.scss";
+import csv2json from "../../utils/CSV2Json";
+import { Data } from "../../types/data";
 
 // component to upload the csv file
 const UploadFile = () => {
@@ -27,7 +29,7 @@ const UploadFile = () => {
   };
 
   // upload file function
-  const upload = () => {
+  const upload = async () => {
     setProgress(0);
     if (!currentFile) return;
 
@@ -54,11 +56,62 @@ const UploadFile = () => {
       });
   };
 
+  // after the file is uploaded -> parse the file and send the data to the backend
+  const onParsingCSV = useCallback(
+    async (props: { csvFilePath: string }) => {
+      const helperProp = {
+        csvFilePath: props.csvFilePath,
+      };
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve(csv2json(helperProp));
+        }, 2000);
+      });
+    },
+    [csv2json]
+  );
+
+  const onSendingData = useCallback(
+    async (props: { csvFilePath: string; url: string }) => {
+      try {
+        setLoading(true);
+
+        const jsonArray = (await onParsingCSV({
+          csvFilePath: props.csvFilePath,
+        })) as Array<Data>;
+
+        // send the data to the backend
+        services
+          .sendData({
+            url: props.url,
+            data: jsonArray,
+          })
+          .then((response) => {
+            console.log(JSON.stringify(response));
+          })
+          .catch((error) => {
+            console.error(`Error: ${error}`);
+          });
+      } catch (error) {
+        console.error(`Error fetching data: `, error);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [onParsingCSV, setLoading]
+  );
+
   // when the file is uploaded -> get the files to update the file info
   useEffect(() => {
     getFiles()
       .then((response) => {
         setFileInfos(response.data);
+        onSendingData(
+          {
+            csvFilePath: "http://localhost:3000/files",
+            url: "http://127.0.0.1:5000/predict",
+          }
+        );
       })
       .catch((error) => {
         setMessage(error.response.data.message);
