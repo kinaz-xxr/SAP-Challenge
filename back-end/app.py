@@ -4,12 +4,13 @@ from flask import Flask, request
 from models import db
 from flask_sqlalchemy import SQLAlchemy
 import pandas as pd
-
+from flask_cors import CORS
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = 'cockroachdb://dat:a8yS_VjWUTTMdhfXLQ70Cw@waning-reptile-6926.g8z.gcp-us-east1.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'cockroachdb://dat:a8yS_VjWUTTMdhfXLQ70Cw@waning-reptile-6926.g8z.gcp-us-east1.cockroachlabs.cloud:26257/defaultdb'
 db.init_app(app)
+CORS(app)  # Enable CORS for all routes
 
 def getFixTime(carType : str):
     if (carType == 'compact'):
@@ -43,19 +44,18 @@ def hello():
 def predict():
     file = request.files["file"]
     print(pd.read_csv(file))
-    loAppointmentObject : list[AppointmentObject] = request.form.get('table')
-    for appointment in loAppointmentObject:
-        appointmentObject = AppointmentObject(  str(uuid.uuid1()), 
-                                                appointment.dateBooked, 
-                                                appointment.dateStartAppointment, 
-                                                appointment.dateEndPAppointment, 
-                                                appointment.carType)
+    # loAppointmentObject : list[AppointmentObject] = request.form.get('table')
+    # for appointment in loAppointmentObject:
+    #     appointmentObject = AppointmentObject(  str(uuid.uuid1()), 
+    #                                             appointment.dateBooked, 
+    #                                             appointment.dateStartAppointment, 
+    #                                             appointment.dateEndPAppointment, 
+    #                                             appointment.carType)
 
         ##Update Database
 
         ## if new date get new lambda 
 
-        print()
 lambda_object = {
     'compact': 2048/(24*60), 
     'medium': 2037/(24*60), 
