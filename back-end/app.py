@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, timedelta
 import uuid
 from flask import Flask, request
 from models import db
@@ -26,11 +26,11 @@ def getFixTime(carType : str):
 
 
 class AppointmentObject:
-    def __init__(self, id : str, dateBooked : str, dateStartAppointment : str, carType : str):
-        self.id = id 
+    def __init__(self,  dateBooked : str, dateStartAppointment : str, carType : str):
+        self.id = str(uuid.uuid1())
         self.dateBooked = dateBooked
         self.dateStartAppointment = dateStartAppointment
-        self.dateEndAppointment = datetime.strptime(dateStartAppointment, '%m/%d/%Y %I:%M:%S %p') + datetime.timedelta(minutes=getFixTime(carType))
+        self.dateEndAppointment = datetime.strptime(dateStartAppointment, '%m/%d/%Y %H:%M') + timedelta(minutes=getFixTime(carType))
         self.carType = carType
 with app.app_context():
     db.create_all()
@@ -44,6 +44,7 @@ def hello():
 def predict():
     file = request.files["file"]
     print(pd.read_csv(file))
+    iterateDay(pd.read_csv(file))
     # loAppointmentObject : list[AppointmentObject] = request.form.get('table')
     # for appointment in loAppointmentObject:
     #     appointmentObject = AppointmentObject(  str(uuid.uuid1()), 
@@ -56,11 +57,3 @@ def predict():
 
         ## if new date get new lambda 
 
-lambda_object = {
-    'compact': 2048/(24*60), 
-    'medium': 2037/(24*60), 
-    'full-size': 2005/(24*60), 
-    'class-1':1982/(24*60), 
-
-}
-  # Create tables when the app starts
