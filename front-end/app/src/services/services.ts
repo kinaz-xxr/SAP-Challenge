@@ -3,7 +3,7 @@ import http from "../http-common";
 import { sendDataProps } from "../types/data";
 import { Data } from "../types/data";
 import { PostDateReq } from "../types/date";
-import { DatePickerData } from "../components/DatePicker/DatePicker";
+import GetRevenueRequest from "../types/revenue";
 
 // rest services
 export interface Services {
@@ -11,7 +11,8 @@ export interface Services {
   fileUpload(uploadFile: File, onUploadProgress: any): Promise<any>;
   getFiles(): Promise<any>;
   postDate(req: PostDateReq): Promise<any>;
-}
+  getRevenue(req: GetRevenueRequest): Promise<any>;
+};
 
 class ServicesImpl implements Services {
   async sendData(req: sendDataProps) {
@@ -53,7 +54,13 @@ class ServicesImpl implements Services {
         "Content-Type": "application/json",
       },
     });
-  }
+  };
+
+  getRevenue(req: GetRevenueRequest): Promise<any> {
+    return http.get<GetRevenueRequest>(req.url, {
+      data: req.date
+    });
+  };
 }
 
 export default ServicesImpl;

@@ -1,4 +1,4 @@
-import UploadFile from "../../components/Upload/UploadFile";
+import UploadFile from "../Upload/UploadFile";
 import AboutSection from "../../components/About/AboutSection";
 import Schedule from "../Schedule/Schedule";
 import Description from "../../components/Description/Description";

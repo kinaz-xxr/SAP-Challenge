@@ -4,10 +4,9 @@ import Home from "./views/Home/Home";
 import AppContextProvider from "./context/AppContext";
 import SuccessContextProvider from "./context/SuccessContext";
 import Schedule from "./views/Schedule/Schedule";
-import AboutSection from "./components/About/AboutSection";
-import UploadFile from "./components/Upload/UploadFile";
 import Modal from "./components/Modal/Modal";
 import "bootstrap/dist/css/bootstrap.min.css";
+import DateContextProvider from "./context/DateContext";
 
 const App = () => {
   return (
@@ -15,10 +14,12 @@ const App = () => {
       <AppContextProvider>
         <LoadingContextProvider>
           <SuccessContextProvider>
-            <Routes>
-              <Route path="/home" element={<Home />} />
-              <Route path="/schedule" element={<Schedule />} />
-            </Routes>
+            <DateContextProvider>
+              <Routes>
+                <Route path="/home" element={<Home />} />
+                <Route path="/schedule" element={<Schedule />} />
+              </Routes>
+            </DateContextProvider>
           </SuccessContextProvider>
           <Modal />
         </LoadingContextProvider>

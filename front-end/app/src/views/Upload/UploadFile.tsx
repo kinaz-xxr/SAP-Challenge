@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState, useEffect, useCallback } from 'react';
+import React, { ChangeEvent, useState, useEffect, useCallback } from "react";
 import { useLoadingContext } from "../../context/LoadingContext";
 import CircularProgress from "@mui/material/CircularProgress";
 import IFile from "../../types/file";
@@ -7,7 +7,7 @@ import ServicesImpl from "../../services/services";
 import styles from "./UploadFile.module.scss";
 import { useSuccessContext } from "../../context/SuccessContext";
 import { useAppContext } from "../../context/AppContext";
-import Success from "../Success/Success";
+import Success from "../../components/Success/Success";
 
 // component to upload the csv file
 const UploadFile = () => {
@@ -50,7 +50,6 @@ const UploadFile = () => {
         }, 2000); // show success component for 2 seconds
 
         // the step 1 button becomes the success
-        
       })
       .catch((error) => {
         setProgress(0);
@@ -66,7 +65,15 @@ const UploadFile = () => {
         }
         setCurrentFile(undefined);
       });
-  }, [currentFile, setCurrentFile, setProgress, setMessage, fileUpload, setSuccess, setShowModal]);
+  }, [
+    currentFile,
+    setCurrentFile,
+    setProgress,
+    setMessage,
+    fileUpload,
+    setSuccess,
+    setShowModal,
+  ]);
 
   // when the file is uploaded -> get the files to update the file info
   useEffect(() => {
@@ -125,9 +132,7 @@ const UploadFile = () => {
       <div className="card mt-3">
         <div className="card-header">List of Files</div>
         <ul className="list-group list-group-flush">
-          {fileInfo && 
-            <a href={fileInfo.url}>{fileInfo.name}</a>
-          }
+          {fileInfo && <a href={fileInfo.url}>{fileInfo.name}</a>}
         </ul>
       </div>
     </div>
