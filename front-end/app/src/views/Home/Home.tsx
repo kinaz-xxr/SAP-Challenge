@@ -5,11 +5,7 @@ import Schedule from "../../components/Schedule";
 // Home component
 const Home = () => {
     return (
-        <div>
-            <AboutSection />
-            <UploadFile />
-            <Schedule />
-        </div>
+        <div></div>
     );
 };
 
