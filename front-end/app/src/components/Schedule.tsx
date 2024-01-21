@@ -1,14 +1,15 @@
 // Import necessary dependencies
 import React from "react";
 import { useEffect, useState } from "react";
+import styles from './UploadFile.module.scss';
 
 // Define the functional component
-const AboutSection: React.FC = () => {
+const Schedule: React.FC = () => {
     return (
         <div>
-            <p>This is the About section component.</p>
+            <p>This is the schedule section.</p>
         </div>
     );
 }
 
-export default AboutSection;
+export default Schedule;
