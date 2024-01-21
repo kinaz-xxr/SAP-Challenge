@@ -44,7 +44,16 @@ const ReportLineChart = () => {
         width={500}
         height={300}
       />
+      <div style={{display:'flex', justifyContent: 'center'}}>
+      <p>
+        Revenue: {actualRevenue}
+      </p>
+      <p>
+        Revenue Missed: {actualRevenue}
+      </p>
     </div>
+    </div>
+
   );
 };
 
