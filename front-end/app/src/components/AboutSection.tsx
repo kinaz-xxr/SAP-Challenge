@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 const AboutSection: React.FC = () => {
     return (
         <div>
-            <p>This is the About section component.</p>
+            <p>Our software optimizes your car washing schedule.</p>
         </div>
     );
 }
