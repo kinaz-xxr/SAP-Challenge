@@ -107,5 +107,10 @@ class RevenueLossTable(db.Model):
     date = db.Column(db.String(40))
     revenue = db.Column(db.Integer)
     loss = db.Column(db.Integer)
+    compact_loss = db.Column(db.Integer)
+    medium_loss = db.Column(db.Integer)
+    fullsize_loss = db.Column(db.Integer)
+    class1_loss = db.Column(db.Integer)
+    class2_loss = db.Column(db.Integer)
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}

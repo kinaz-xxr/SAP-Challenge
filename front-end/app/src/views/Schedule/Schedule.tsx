@@ -7,11 +7,12 @@ import { useAppContext } from "../../context/AppContext";
 import { useSuccessContext } from "../../context/SuccessContext";
 import Success from "../../components/Success/Success";
 import { useDateContext } from "../../context/DateContext";
+import GantChart from "../../components/Chart/GantChart";
 
 const Schedule = () => {
   const { currentDate, setCurrentDate } = useDateContext();
 
-  const { setShowModal } = useAppContext();
+  const { setShowModal, setModalContent, gantChartProps, setGantChartProps } = useAppContext();
   const { setSuccess } = useSuccessContext();
 
   const services: Services = new ServicesImpl();
@@ -29,6 +30,8 @@ const Schedule = () => {
             setSuccess(false);
             setShowModal(false);
           }, 2000);
+
+          setGantChartProps(response.data);
         })
         .catch((error) => {
           throw new Error(`Error with pick date: ${error}`);

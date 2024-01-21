@@ -133,9 +133,9 @@ def removeLastFromBay(table_name):
     db.session.close()
 
 
-def inputRevenueLoss(revenue : int, loss : int, date : str):
+def inputRevenueLoss(revenue : int, loss : int, date : str, compact_loss, medium_loss, full_size_loss, class_1_loss, class_2_loss):
     print('in')
-    db.session.add(RevenueLossTable(id = str(uuid.uuid1()),  revenue = revenue, loss=loss, date = date))
+    db.session.add(RevenueLossTable(id = str(uuid.uuid1()),  revenue = revenue, loss=loss, date = date, compact_loss = compact_loss, medium_loss = medium_loss, full_size_loss = full_size_loss, class_1_loss=class_1_loss, class_2_loss=class_2_loss))
     db.session.commit()
     db.session.close()
 
@@ -178,6 +178,11 @@ def iterateDay(df):
     revenueGain_lst = []
     revenueLost_lst = []
     bays_lst = []
+    compact_loss_lst = []
+    medium_loss_lst = []
+    full_size_loss_lst = []
+    class_1_loss_lst = []
+    class_2_loss_lst = []
     
     for k in range(0,2):
         for i in range(1, 10):
@@ -196,11 +201,35 @@ def iterateDay(df):
             }
             df_filtered = df[df["date"]=="2022-1"+str(k)+"-0" + str(i)]
             df_filtered = df_filtered.sort_values(by=["requested appointment", "requested time"])
-            revenueGain, revenueLost = iterateRequest(df_filtered, bays_dict)
+            revenueGain, revenueLost, rejected_lst = iterateRequest(df_filtered, bays_dict)
             revenueGain_lst.append(revenueGain)
             revenueLost_lst.append(revenueLost)
-            inputRevenueLoss(revenueGain, revenueLost, "2022-1"+str(k)+"-" + str(i))
             bays_lst.append(bays_dict)
+
+            compact_loss = 0
+            medium_loss = 0
+            full_size_loss = 0
+            class_1_loss = 0
+            class_2_loss = 0
+            for car_type in rejected_lst:
+                if car_type == "compact":
+                    compact_loss -= getServiceCharge(car_type)
+                if car_type == "medium":
+                    medium_loss -= getServiceCharge(car_type)
+                if car_type == "full-size":
+                    full_size_loss -= getServiceCharge(car_type)
+                if car_type == "class 1 truck":
+                    class_1_loss -= getServiceCharge(car_type)
+                if car_type == "class 2 truck":
+                    class_2_loss -= getServiceCharge(car_type)
+                    
+            compact_loss_lst.append(compact_loss)
+            medium_loss_lst.append(medium_loss)
+            full_size_loss_lst.append(full_size_loss)
+            class_1_loss_lst.append(class_1_loss)
+            class_2_loss_lst.append(class_2_loss)
+
+            inputRevenueLoss(revenueGain, revenueLost, "2022-1"+str(k)+"-" + str(i), compact_loss, medium_loss, full_size_loss, class_1_loss, class_2_loss)
         
         for i in range(10, 32):
             bays_dict = {
@@ -218,10 +247,36 @@ def iterateDay(df):
             }
             df_filtered = df[df["date"]=="2022-1"+str(k)+"-" + str(i)]
             df_filtered.sort_values(by=["requested appointment", "requested time"])
-            revenueGain, revenueLost = iterateRequest(df_filtered, bays_dict)
+            revenueGain, revenueLost, rejected_lst = iterateRequest(df_filtered, bays_dict)
             revenueGain_lst.append(revenueGain)
             revenueLost_lst.append(revenueLost)
-            inputRevenueLoss(revenueGain, revenueLost, "2022-1"+str(k)+"-" + str(i))
+
+
+            compact_loss = 0
+            medium_loss = 0
+            full_size_loss = 0
+            class_1_loss = 0
+            class_2_loss = 0
+            for car_type in rejected_lst:
+                if car_type == "compact":
+                    compact_loss -= getServiceCharge(car_type)
+                if car_type == "medium":
+                    medium_loss -= getServiceCharge(car_type)
+                if car_type == "full-size":
+                    full_size_loss -= getServiceCharge(car_type)
+                if car_type == "class 1 truck":
+                    class_1_loss -= getServiceCharge(car_type)
+                if car_type == "class 2 truck":
+                    class_2_loss -= getServiceCharge(car_type)
+                    
+            compact_loss_lst.append(compact_loss)
+            medium_loss_lst.append(medium_loss)
+            full_size_loss_lst.append(full_size_loss)
+            class_1_loss_lst.append(class_1_loss)
+            class_2_loss_lst.append(class_2_loss)
+
+            inputRevenueLoss(revenueGain, revenueLost, "2022-1"+str(k)+"-" + str(i), compact_loss, medium_loss, full_size_loss, class_1_loss, class_2_loss)
+
     return revenueGain_lst, revenueLost_lst, bays_lst
 
         
@@ -251,6 +306,7 @@ def iterateRequest(df, bays_dict):
     requests_lst = df.values
     revenueGain = 0
     revenueLost = 0
+    rejected_lst = []
     for i in range(len(requests_lst)):
         request = requests_lst[i]
         car_key = request[2]
@@ -268,7 +324,8 @@ def iterateRequest(df, bays_dict):
             revenueGain += getServiceCharge(car_key)
         else:
             revenueLost -= getServiceCharge(car_key)
-    return revenueGain, revenueLost
+            rejected_lst.append(car_key)
+    return revenueGain, revenueLost, rejected_lst
  
 # with app.app_context():
     # iterateDay(pd.read_csv("/datafile (1).csv", names=["requested time", "requested appointment", "car type"]))   
@@ -374,16 +431,3 @@ def schedule():
         }
 
     )
-with app.app_context:
-    db.session.query(BayTable1).delete()
-    db.session.query(BayTable2).delete()
-    db.session.query(BayTable3).delete()
-    db.session.query(BayTable4).delete()
-    db.session.query(BayTable5).delete()
-    db.session.query(BayTable6).delete()
-    db.session.query(BayTable7).delete()
-    db.session.query(BayTable8).delete()
-    db.session.query(BayTable9).delete()
-    db.session.query(BayTable10).delete()
-    db.session.query(RevenueLossTable).delete()
-    db.session.commit()

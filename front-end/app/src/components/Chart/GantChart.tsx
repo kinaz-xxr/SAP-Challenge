@@ -1,206 +1,128 @@
+import React, { useState } from "react";
+import { render } from "react-dom";
+// Import Highcharts
+import Highcharts from "highcharts/highcharts-gantt";
+import HighchartsReact from "highcharts-react-official";
+import { blue, green, lightBlue, orange, red, yellow } from "@mui/material/colors";
 
-import React from "react";
-import { de } from "date-fns/locale";
-import { format } from "date-fns";
+const GantChart = (taskData : any) => {
 
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  TimeScale,
-  TooltipPositionerMap,
-  ChartOptions
-} from "chart.js";
+  console.log(taskData)
 
-import { Bar } from "react-chartjs-2";
-import "chartjs-adapter-date-fns";
+  let table1 = taskData['table1']
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  TimeScale
-);
+  let tableColorMapper : any = {
+    'compact' : lightBlue, 
+    'medium' : blue, 
+    'full-size' : red, 
+    'class 1 truck' : yellow, 
+    'class 2 truck' : orange, 
+  }
 
-interface CustomTooltip extends TooltipPositionerMap {
-  custom: any;
-}
+  taskData['table1']
 
-(Tooltip.positioners as CustomTooltip).custom = (elements: any, eventPosition: { x: any; y: any; }) => {
-  return {
-    x: eventPosition.x,
-    y: eventPosition.y
-  };
-};
+  let firstTable = []
+  let secondTable = []
+  let thirdTable = []
+  let fourthTable = []
+  let fifthTable = []
+  let sixthTable = []
+  let seventhTable = []
+  let eightTable = []
+  let nineTable = []
+  let tenTable = []
+  for(let i = 0; i < taskData['table1']!.dateStartAppointment; i++) {
+    firstTable.push({
+      y: 0, 
+      start: taskData['table1']!.dateStartAppointment[i], 
+      end: taskData['table1']!.dateEndAppointment[i], 
+      color: tableColorMapper[taskData['table1']!.carType[i]]
+    })
 
-interface StackData {
-  Stack: string;
-  LastDate: Date;
-}
+    secondTable.push({
+      y: 1, 
+      start: taskData['table2']!.dateStartAppointment[i], 
+      end: taskData['table2']!.dateEndAppointment[i], 
+      color: tableColorMapper[taskData['table2']!.carType[i]]
+    })
 
-const labels = [...new Set(testData.map((event: { EventSource: any; }) => event.EventSource))];
+    thirdTable.push({
+      y: 2, 
+      start: taskData['table3']!.dateStartAppointment[i], 
+      end: taskData['table3']!.dateEndAppointment[i], 
+      color: tableColorMapper[taskData['table3']!.carType[i]]
+    })
 
-const eventNames = [...new Set(testData.map((event: { EventName: any; }) => event.EventName))];
-const eventColors = eventNames
-  .map((val, i) => {
-    var color = `hsl(${
-      (i * (360 / (eventNames.length || 1))) % 360
-    },100%,50%, 1)`;
-    return color;
-  })
-  .map((value) => ({ value, sort: Math.random() }))
-  .sort((a, b) => a.sort - b.sort)
-  .map(({ value }) => value);
+    fourthTable.push({
+      y: 3, 
+      start: taskData['table4']!.dateStartAppointment[i], 
+      end: taskData['table4']!.dateEndAppointment[i], 
+      color: tableColorMapper[taskData['table4']!.carType[i]]
+    })
 
-const labelGrouping: StackData[][] = [];
+    fifthTable.push({
+      y: 4, 
+      start: taskData['table5']!.dateStartAppointment[i], 
+      end: taskData['table5']!.dateEndAppointment[i], 
+      color: tableColorMapper[taskData['table5']!.carType[i]]
+    })
 
-const sortedData = testData.sort(
-  (a: { Start: { getTime: () => number; }; }, b: { Start: { getTime: () => number; }; }) => a.Start.getTime() - b.Start.getTime()
-);
+    sixthTable.push({
+      y: 5, 
+      start: taskData['table6']!.dateStartAppointment[i], 
+      end: taskData['table6']!.dateEndAppointment[i], 
+      color: tableColorMapper[taskData['table6']!.carType[i]]
+    })
 
-const datasets = sortedData.map((event: { Start: { getTime: () => number; }; End: Date; EventSource: string; EventName: any; }) => {
-  let start = event.Start.getTime();
-  let end = event.End.getTime();
+    seventhTable.push({
+      y: 6, 
+      start: taskData['table7']!.dateStartAppointment[i], 
+      end: taskData['table7']!.dateEndAppointment[i], 
+      color: tableColorMapper[taskData['table7']!.carType[i]]
+    })
 
-  let stack: StackData = undefined;
-  let firstStackEntry: boolean = false;
+    eightTable.push({
+      y: 7, 
+      start: taskData['table8']!.dateStartAppointment[i], 
+      end: taskData['table8']!.dateEndAppointment[i], 
+      color: tableColorMapper[taskData['table8']!.carType[i]]
+    })
 
-  if (labelGrouping[event.EventSource] === undefined) {
-    stack = { Stack: "Stack0", LastDate: event.End };
-    labelGrouping[event.EventSource] = [stack];
-    firstStackEntry = true;
-  } else {
-    labelGrouping[event.EventSource].forEach((item, index) => {
-      if (
-        stack === undefined &&
-        item.LastDate.getTime() <= event.Start.getTime()
-      ) {
-        stack = { ...item };
-        item.LastDate = event.End;
+    nineTable.push({
+      y: 8, 
+      start: taskData['table9']!.dateStartAppointment[i], 
+      end: taskData['table9']!.dateEndAppointment[i], 
+      color: tableColorMapper[taskData['table9']!.carType[i]]
+    })
+
+    tenTable.push({
+      y: 9, 
+      start: taskData['table10']!.dateStartAppointment[i], 
+      end: taskData['table10']!.dateEndAppointment[i], 
+      color: tableColorMapper[taskData['table10']!.carType[i]]
+    })
+  }
+
+  
+  
+
+
+  const [options] = useState({
+    series: [
+      {
+        data: [...firstTable, ...secondTable, ...thirdTable, ...fourthTable, ...fifthTable, ...sixthTable,
+               ...seventhTable, ...eightTable, nineTable]
       }
-    });
-    if (stack === undefined) {
-      const stackIndex = labelGrouping[event.EventSource].length;
-      stack = { Stack: "Stack" + stackIndex, LastDate: event.End };
-      labelGrouping[event.EventSource].push(stack);
-      firstStackEntry = true;
-    }
-  }
+    ]
+  });
 
-  let data = labels.map(() => null);
-
-  if (!firstStackEntry) {
-    start -= stack.LastDate.getTime();
-    end -= stack.LastDate.getTime();
-  }
-  data[labels.indexOf(event.EventSource)] = [
-    start,
-    end,
-    format(event.Start, "HH:mm:ss.SSS") +
-      " - " +
-      format(event.End, "hh:mm:ss.SSS")
-  ];
-
-  return {
-    label: event.EventName,
-    data: data,
-    skipNull: true,
-    backgroundColor: eventColors[eventNames.indexOf(event.EventName)],
-    stack: event.EventSource + "_" + stack.Stack,
-    datalabels: {
-      formatter: () => event.EventName
-    }
-  };
-});
-
-const data = {
-  labels,
-  datasets: datasets
+  return (
+    <HighchartsReact
+      highcharts={Highcharts}
+      constructorType={"ganttChart"}
+      options={options}
+    />
+  );
 };
 
-export const options: ChartOptions<"bar"> = {
-  indexAxis: "y" as const,
-  plugins: {
-    tooltip: {
-      callbacks: {
-        title: () => "",
-        afterBody: (items) =>
-          data.datasets[items[0].datasetIndex].data[items[0].dataIndex][2],
-        label: (item) => data.datasets[item.datasetIndex].label
-      },
-      position: "custom" as "average"
-    },
-    legend: {
-      display: false
-    },
-    title: {
-      display: true,
-      text: "Timeline"
-    },
-    datalabels: {
-      color: "black",
-      anchor: "start",
-      align: "right",
-      display: (context: { dataset: { data: { [x: string]: null; }; }; dataIndex: string | number; }) => {
-        return context.dataset.data[context.dataIndex] !== null
-          ? "auto"
-          : false;
-      },
-      font: function (context: { chart: { width: any; }; }) {
-        var width = context.chart.width;
-        var size = width / 100;
-        return {
-          weight: "bold",
-          size: size
-        };
-      }
-    }
-  },
-  resizeDelay: 20,
-  responsive: true,
-  scales: {
-    x: {
-      min: Math.min(...testData.map((event: { Start: { getTime: () => any; }; }) => event.Start.getTime())),
-      max: Math.max(...testData.map((event: { End: { getTime: () => any; }; }) => event.End.getTime())),
-      ticks: {
-        autoSkip: true,
-        maxTicksLimit: 10
-      },
-      type: "time",
-      time: {
-        displayFormats: {
-          millisecond: "HH:mm:ss.SSS",
-          second: "yyyy-MM-dd HH:mm:ss.SSS",
-          minute: "yyyy-MM-dd HH:mm:ss.SSS",
-          hour: "yyyy-MM-dd HH:mm:ss.SSS",
-          day: "yyyy-MM-dd HH:mm:ss.SSS",
-          week: "yyyy-MM-dd HH:mm:ss.SSS",
-          month: "yyyy-MM-dd HH:mm:ss.SSS",
-          quarter: "yyyy-MM-dd HH:mm:ss.SSS",
-          year: "yyyy-MM-dd HH:mm:ss.SSS"
-        },
-        unit: "millisecond"
-      },
-      adapters: {
-        date: {
-          locale: de
-        }
-      },
-      stacked: true
-    },
-    y: {
-      stacked: true
-    }
-  }
-};
-
-export function GantChart() {
-  return <Bar options={options} data={data} />;
-}
+export default GantChart

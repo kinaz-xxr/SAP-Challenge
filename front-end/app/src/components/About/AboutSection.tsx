@@ -8,12 +8,13 @@ import UploadFile from "../../views/Upload/UploadFile";
 import { useLoadingContext } from "../../context/LoadingContext";
 import Loading from "../Loading/Loading";
 import Schedule from "../../views/Schedule/Schedule";
-import LinearChart from "../LinearChart/LinearChart";
 import ReportLineChart from "../../views/Report/ReportLineChart";
+import GantChart from "../Chart/GantChart";
+
 
 // Define the functional component
 const AboutSection: React.FC = () => {
-  const { setModalContent, setShowModal } = useAppContext();
+  const { setModalContent, setShowModal, gantChartProps } = useAppContext();
   const { setLoading } = useLoadingContext();
 
   return (
@@ -61,7 +62,12 @@ const AboutSection: React.FC = () => {
             setModalContent(<Loading />);
             setTimeout(() => {
               setLoading(false);
-              setModalContent(<ReportLineChart />);
+              setModalContent(
+                <>
+                  <ReportLineChart />
+                  <GantChart taskData={gantChartProps}/>
+                </>
+              );
               console.log("Here");
             }, 2000);
           }}
