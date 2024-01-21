@@ -14,7 +14,6 @@ import pandas as pd
 from models import db
 import numpy as np
 from datetime import datetime
-from predict_algo import iterateDay
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -229,7 +228,7 @@ def iterateDay(df):
             class_1_loss_lst.append(class_1_loss)
             class_2_loss_lst.append(class_2_loss)
 
-            inputRevenueLoss(revenueGain, revenueLost, "2022-1"+str(k)+"-" + str(i), compact_loss, medium_loss, full_size_loss, class_1_loss, class_2_loss)
+            # inputRevenueLoss(revenueGain, revenueLost, "2022-1"+str(k)+"-" + str(i), compact_loss, medium_loss, full_size_loss, class_1_loss, class_2_loss)
         
         for i in range(10, 32):
             bays_dict = {
@@ -275,7 +274,8 @@ def iterateDay(df):
             class_1_loss_lst.append(class_1_loss)
             class_2_loss_lst.append(class_2_loss)
 
-            inputRevenueLoss(revenueGain, revenueLost, "2022-1"+str(k)+"-" + str(i), compact_loss, medium_loss, full_size_loss, class_1_loss, class_2_loss)
+            print(compact_loss)
+            # inputRevenueLoss(revenueGain, revenueLost, "2022-1"+str(k)+"-" + str(i), compact_loss, medium_loss, full_size_loss, class_1_loss, class_2_loss)
 
     return revenueGain_lst, revenueLost_lst, bays_lst
 
@@ -327,20 +327,6 @@ def iterateRequest(df, bays_dict):
             rejected_lst.append(car_key)
     return revenueGain, revenueLost, rejected_lst
  
-# with app.app_context():
-    # iterateDay(pd.read_csv("/datafile (1).csv", names=["requested time", "requested appointment", "car type"]))   
-    # db.session.query(BayTable1).delete()
-    # db.session.query(BayTable2).delete()
-    # db.session.query(BayTable3).delete()
-    # db.session.query(BayTable4).delete()
-    # db.session.query(BayTable5).delete()
-    # db.session.query(BayTable6).delete()
-    # db.session.query(BayTable7).delete()
-    # db.session.query(BayTable8).delete()
-    # db.session.query(BayTable9).delete()
-    # db.session.query(BayTable10).delete()
-    # db.session.query(RevenueLossTable).delete()
-    # db.session.commit()
 
 
 @app.route('/')
@@ -431,3 +417,4 @@ def schedule():
         }
 
     )
+

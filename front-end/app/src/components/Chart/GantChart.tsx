@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { render } from "react-dom";
 // Import Highcharts
 import Highcharts from "highcharts/highcharts-gantt";
 import HighchartsReact from "highcharts-react-official";
@@ -20,8 +19,6 @@ const GantChart = (taskData : any) => {
     'class 2 truck' : orange, 
   }
 
-  taskData['table1']
-
   let firstTable = []
   let secondTable = []
   let thirdTable = []
@@ -32,7 +29,7 @@ const GantChart = (taskData : any) => {
   let eightTable = []
   let nineTable = []
   let tenTable = []
-  for(let i = 0; i < taskData['table1']!.dateStartAppointment) {
+  for(let i = 0; i < taskData['table1']!.dateStartAppointment; i++) {
     firstTable.push({
       y: 0, 
       start: taskData['table1']!.dateStartAppointment[i], 
