@@ -3,6 +3,7 @@ import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { StaticDatePicker } from "@mui/x-date-pickers/StaticDatePicker";
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import Style from './DatePicker.module.scss';
 
 export type DatePickerData = {
   date: string;
@@ -23,7 +24,8 @@ export type DatePickerProps = {
 const DatePicker = (props: DatePickerProps) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DemoItem label="Pick a date to view appointment">
+      <h5 className={Style.Header}>Pick a date to view appointment</h5>
+      <DemoItem label="">
         <StaticDatePicker
           defaultValue={dayjs("2022-10-01")}
           onChange={(newDate) => {
