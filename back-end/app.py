@@ -315,7 +315,14 @@ def iterateRequest(df, bays_dict):
         decision = inputBay(request, bays_dict, car_key) # check fixed bays
         if decision < 0:
             for j in range(5, 10):
-                decision = inputBay(request, bays_dict, list(bays_dict.keys())[j])
+                if j == 9:
+                    price = getServiceCharge(car_key)
+                    if price > 350:
+                        decision = inputBay(request, bays_dict, list(bays_dict.keys())[j])
+                    else:
+                        break
+                else:
+                    decision = inputBay(request, bays_dict, list(bays_dict.keys())[j])
                 if decision > 0:
                     # request_input = AppointmentObject(booked_time, appointment_time, car_key)
                     # inputBayTable(request_input, bayToTableMap[list(bays_dict.keys())[j]])
