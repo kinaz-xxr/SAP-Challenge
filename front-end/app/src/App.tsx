@@ -1,8 +1,8 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import LoadingContextProvider from "./context/LoadingContext";
 import Home from "./views/Home/Home";
-import Schedule from "./components/Schedule";
-import AboutSection from "./components/AboutSection";
+import Schedule from "./components/Schedule/Schedule";
+import AboutSection from "./components/About/AboutSection";
 import UploadFile from "./components/Upload/UploadFile";
 
 const App = () => {
@@ -11,11 +11,7 @@ const App = () => {
       <LoadingContextProvider>
         <Routes>
           <Route path="/home" element={
-            <div>
               <Home />
-              <UploadFile />
-              <AboutSection />
-            </div>
           } />
           <Route path="/schedule" element={<Schedule />} />
         </Routes>
