@@ -1,4 +1,3 @@
-import { Console, error } from "console";
 import { createContext, useContext, useMemo, useState } from "react";
 
 // success context hook
@@ -21,7 +20,8 @@ const SuccessContextProvider = (props: { children: any }) => {
     try {
       setIsSuccess(value);
     } catch (error) {
-      console.error(`Error while setting success state: ${error}`);
+      // console.error(`Error while setting success state: ${error}`);
+      throw new Error(`Error: ${error}`);
     }
   };
 
@@ -40,8 +40,8 @@ const SuccessContextProvider = (props: { children: any }) => {
 export const useSuccessContext = () => {
     const context = useContext(SuccessContext);
     if(context === null) {
-        throw new Error(`Error while getting the current success state: ${error}`);
-    }
+        throw new Error(`Error while getting the current success state!`);
+    };
     return context;
 };
 
