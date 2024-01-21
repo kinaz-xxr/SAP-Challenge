@@ -9,6 +9,8 @@ class BayTable1(db.Model):
     dateStartAppointment = db.Column(db.String(40))
     dateEndAppointment = db.Column(db.String(40))
     carType = db.Column(db.String(40))
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 class BayTable2(db.Model):
     __tablename__ = 'BayTable2'
@@ -17,6 +19,8 @@ class BayTable2(db.Model):
     dateStartAppointment = db.Column(db.String(40))
     dateEndAppointment = db.Column(db.String(40))
     carType = db.Column(db.String(40))
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 class BayTable3(db.Model):
     __tablename__ = 'BayTable3'
@@ -25,6 +29,8 @@ class BayTable3(db.Model):
     dateStartAppointment = db.Column(db.String(40))
     dateEndAppointment = db.Column(db.String(40))
     carType = db.Column(db.String(40))
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 class BayTable4(db.Model):
     __tablename__ = 'BayTable4'
@@ -33,6 +39,8 @@ class BayTable4(db.Model):
     dateStartAppointment = db.Column(db.String(40))
     dateEndAppointment = db.Column(db.String(40))
     carType = db.Column(db.String(40))
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 class BayTable5(db.Model):
     __tablename__ = 'BayTable5'
@@ -40,7 +48,9 @@ class BayTable5(db.Model):
     dateBooked = db.Column(db.String(40))
     dateStartAppointment = db.Column(db.String(40))
     dateEndAppointment = db.Column(db.String(40))
-    carType = db.Column(db.String(40))
+    carType = db.Column(db.String(40))    
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 class BayTable6(db.Model):
     __tablename__ = 'BayTable6'
@@ -49,6 +59,8 @@ class BayTable6(db.Model):
     dateStartAppointment = db.Column(db.String(40))
     dateEndAppointment = db.Column(db.String(40))
     carType = db.Column(db.String(40))
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 class BayTable7(db.Model):
     __tablename__ = 'BayTable7'
@@ -57,6 +69,8 @@ class BayTable7(db.Model):
     dateStartAppointment = db.Column(db.String(40))
     dateEndAppointment = db.Column(db.String(40))
     carType = db.Column(db.String(40))
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 class BayTable8(db.Model):
     __tablename__ = 'BayTable8'
@@ -65,6 +79,8 @@ class BayTable8(db.Model):
     dateStartAppointment = db.Column(db.String(40))
     dateEndAppointment = db.Column(db.String(40))
     carType = db.Column(db.String(40))
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 class BayTable9(db.Model):
     __tablename__ = 'BayTable9'
@@ -72,7 +88,9 @@ class BayTable9(db.Model):
     dateBooked = db.Column(db.String(40))
     dateStartAppointment = db.Column(db.String(40))
     dateEndAppointment = db.Column(db.String(40))
-    carType = db.Column(db.String(40))
+    carType = db.Column(db.String(40))    
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 class BayTable10(db.Model):
     __tablename__ = 'BayTable10'
@@ -81,8 +99,12 @@ class BayTable10(db.Model):
     dateStartAppointment = db.Column(db.String(40))
     dateEndAppointment = db.Column(db.String(40))
     carType = db.Column(db.String(40))
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 class RevenueLossTable(db.Model):
     date = db.Column(db.String(40), primary_key=True)
     revenue = db.Column(db.Integer)
     loss = db.Column(db.Integer)
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}

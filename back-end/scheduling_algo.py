@@ -2,11 +2,15 @@ from datetime import datetime
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
-from prediction_algo import inputBay
 from models import RevenueLossTable, BayTable1, BayTable2, BayTable3, BayTable4, BayTable5, BayTable6, BayTable7, BayTable8, BayTable9, BayTable10
-from app import db, app, AppointmentObject
+from app import  app, AppointmentObject
+from models import db
+import uuid
 
 #hi
+
+
+
 def getServiceCharge(carType):
     if (carType == 'compact'):
         return 150
@@ -144,4 +148,4 @@ def iterateRequest(df, bays_dict):
     return revenueGain, revenueLost
 
 with app.app_context():
-    iterateDay(pd.read_csv("/Users/buinhatquang/Desktop/ConUHack/SAP challenge/SAP-Challenge/Ch03_Chem.csv"))
+    iterateDay(pd.read_csv("/datafile (1).csv", names=["requested time", "requested appointment", "car type"]))
