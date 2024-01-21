@@ -2,12 +2,15 @@ import { error } from "console";
 import http from "../http-common";
 import { sendDataProps } from "../types/data";
 import { Data } from "../types/data";
+import { PostDateReq } from "../types/date";
+import { DatePickerData } from "../components/DatePicker/DatePicker";
 
 // rest services
 export interface Services {
   sendData(req: sendDataProps): Promise<any>;
   fileUpload(uploadFile: File, onUploadProgress: any): Promise<any>;
   getFiles(): Promise<any>;
+  postDate(req: PostDateReq): Promise<any>;
 }
 
 class ServicesImpl implements Services {
@@ -39,8 +42,17 @@ class ServicesImpl implements Services {
       onUploadProgress,
     });
   }
+
   getFiles(): Promise<any> {
     return http.get("http://127.0.0.1:5000/files");
+  }
+
+  postDate(req: PostDateReq): Promise<any> {
+    return http.post<PostDateReq>(req.url, req.date, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   }
 }
 
