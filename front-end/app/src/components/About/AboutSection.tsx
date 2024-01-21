@@ -7,6 +7,7 @@ import { useAppContext } from "../../context/AppContext";
 import UploadFile from "../Upload/UploadFile";
 import { useLoadingContext } from "../../context/LoadingContext";
 import Loading from "../Loading/Loading";
+import Schedule from "../../views/Schedule/Schedule";
 
 // Define the functional component
 const AboutSection: React.FC = () => {
@@ -23,7 +24,7 @@ const AboutSection: React.FC = () => {
             </div>
             <div className={styles.steps}>
                 <Button 
-                    label="Step 1. "
+                    label="Step 1 "
                     onClick={() => {
                         setShowModal(true);
                         setLoading(true);
@@ -31,25 +32,23 @@ const AboutSection: React.FC = () => {
                         setTimeout(() => {
                             setLoading(false);
                             setModalContent(<UploadFile />);
-                            console.log("Here");
-                        }, 2000);
+                        }, 800);
                     }}
                 />
                 <Button 
-                    label="Step 2. "
+                    label="Step 2 "
                     onClick={() => {
                         setShowModal(true);
                         setLoading(true);
                         setModalContent(<Loading />);
                         setTimeout(() => {
                             setLoading(false);
-                            setModalContent(<UploadFile />);
-                            console.log("Here");
+                            setModalContent(<Schedule />);
                         }, 2000);
                     }}
                 />
                 <Button 
-                    label="Step 3. "
+                    label="Step 3 "
                     onClick={() => {
                         setShowModal(true);
                         setLoading(true);
