@@ -3,7 +3,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from prediction_algo import inputBay
-from app import AppointmentObject
+from models import RevenueLossTable, BayTable1, BayTable2, BayTable3, BayTable4, BayTable5, BayTable6, BayTable7, BayTable8, BayTable9, BayTable10
+from app import db, app, AppointmentObject
 
 #hi
 def getServiceCharge(carType):
@@ -141,4 +142,6 @@ def iterateRequest(df, bays_dict):
         else:
             revenueLost -= getServiceCharge(car_key)
     return revenueGain, revenueLost
-                
+
+with app.app_context():
+    iterateDay(pd.read_csv("/Users/buinhatquang/Desktop/ConUHack/SAP challenge/SAP-Challenge/Ch03_Chem.csv"))
