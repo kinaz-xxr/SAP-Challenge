@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useLoadingContext } from "../../context/LoadingContext";
 import CircularProgress from "@mui/material/CircularProgress";
 import IFile from "../../types/file";
 import Services from "../../services/services";
 import ServicesImpl from "../../services/services";
-import styles from './UploadFile.module.scss';
+import styles from "./UploadFile.module.scss";
+import { Data } from "../../types/data";
 
 // component to upload the csv file
 const UploadFile = () => {
@@ -27,7 +28,7 @@ const UploadFile = () => {
   };
 
   // upload file function
-  const upload = () => {
+  const upload = useCallback(async () => {
     setProgress(0);
     if (!currentFile) return;
 
@@ -49,10 +50,9 @@ const UploadFile = () => {
         } else {
           setMessage("Could not upload the file!");
         }
-
         setCurrentFile(undefined);
       });
-  };
+  }, [currentFile, setCurrentFile, setProgress, setMessage]);
 
   // when the file is uploaded -> get the files to update the file info
   useEffect(() => {
