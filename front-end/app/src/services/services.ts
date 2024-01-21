@@ -4,17 +4,22 @@ import { Data } from "../types/data";
 
 // rest services
 export interface Services {
-    sendData(req: sendDataProps): Promise<any>;
     fileUpload(uploadFile: File, onUploadProgress: any): Promise<any>;
     getFiles(): Promise<any>;
 };
 
 class ServicesImpl implements Services {
-    async sendData(req: sendDataProps) {
-        return http.post<Data>(
-            req.url,
-            req.data,
-        )
+    async fileUpload(uploadFile: File, onUploadProgress: any): Promise<any> {
+        let formData = new FormData();
+
+        formData.append("file", uploadFile);
+
+        return http.post("/upload", formData, {
+            headers: {
+                "Content-Type" : "multipart/form-data",
+            },
+            onUploadProgress,
+        })
         .then((response) => {
             if(response && response.data) {
                 return response.data;
@@ -27,22 +32,15 @@ class ServicesImpl implements Services {
             throw error;
         });
     };
-
-    fileUpload(uploadFile: File, onUploadProgress: any): Promise<any> {
-        let formData = new FormData();
-
-        formData.append("file", uploadFile);
-
-        return http.post("/upload", formData,{
-            headers: {
-                "Content-Type" : "multipart/form-data",
-            },
-            onUploadProgress,
-        });
-    };
     
-    getFiles(): Promise<any> {
-        return http.get("/files");
+    async getFiles(): Promise<any> {
+        return http.get("/files")
+        .then((response) => {
+            console.log(response);
+        })
+        .catch((error) => {
+            console.error(error);
+        })
     };
 };  
 
