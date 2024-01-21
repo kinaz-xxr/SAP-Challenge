@@ -1,4 +1,4 @@
-import { error } from "console";
+import { Console, error } from "console";
 import { createContext, useContext, useMemo, useState } from "react";
 
 // success context hook
