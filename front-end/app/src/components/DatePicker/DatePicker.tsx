@@ -4,24 +4,15 @@ import { StaticDatePicker } from "@mui/x-date-pickers/StaticDatePicker";
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import Style from './DatePicker.module.scss';
-
-export type DatePickerData = {
-  date: string;
-};
-
-export const defaultDatePickerData: DatePickerData = {
-  date: "2022-10-01",
-};
-
-export type setDate = (newDate: DatePickerData) => void;
+import { useDateContext } from "../../context/DateContext";
 
 export type DatePickerProps = {
-  currentDate: DatePickerData;
-  setCurrentDate: setDate;
   onPickDate: (e: any) => void;
 };
 
 const DatePicker = (props: DatePickerProps) => {
+  const { currentDate, setDate } = useDateContext();
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <h5 className={Style.Header}>Pick a date to view appointment</h5>
@@ -35,8 +26,8 @@ const DatePicker = (props: DatePickerProps) => {
 
             const date: string = newDate.format("YYYY-MM-DD");
             console.log(date);
-            props.setCurrentDate({ ...props.currentDate, date });
-            console.log(props.currentDate);
+            setDate(date);
+            console.log(currentDate);
           }}
           onAccept={props.onPickDate}
         />

@@ -1,25 +1,19 @@
 // Import necessary dependencies
 import React, { useCallback, useState } from "react";
 import styles from "./Schedule.module.scss";
-import DatePicker, {
-  DatePickerData,
-  defaultDatePickerData,
-} from "../../components/DatePicker/DatePicker";
+import DatePicker from "../../components/DatePicker/DatePicker";
 import ServicesImpl, { Services } from "../../services/services";
 import { useAppContext } from "../../context/AppContext";
 import { useSuccessContext } from "../../context/SuccessContext";
 import Success from "../../components/Success/Success";
+import { useDateContext } from "../../context/DateContext";
 import GantChart from "../../components/Chart/GantChart";
 
 const Schedule = () => {
-  const [datePickerData, setDatePickerData] = React.useState<DatePickerData>({
-    ...defaultDatePickerData,
-  });
+  const { currentDate, setCurrentDate } = useDateContext();
 
-  const { setShowModal } = useAppContext();
+  const { setShowModal, setModalContent, gantChartProps, setGantChartProps } = useAppContext();
   const { setSuccess } = useSuccessContext();
-
-  const [taskData, setTaskData] = useState({})
 
   const services: Services = new ServicesImpl();
 
@@ -28,7 +22,7 @@ const Schedule = () => {
       services
         .postDate({
           url: "http://127.0.0.1:5000/schedule",
-          date: datePickerData,
+          date: currentDate,
         })
         .then((response) => {
           setSuccess(true);
@@ -37,23 +31,20 @@ const Schedule = () => {
             setShowModal(false);
           }, 2000);
 
-          setTaskData(response)
+          setGantChartProps(response.data);
         })
         .catch((error) => {
           throw new Error(`Error with pick date: ${error}`);
         });
     },
-    [datePickerData, setDatePickerData, defaultDatePickerData]
+    [currentDate, setCurrentDate]
   );
 
   return (
     <>
       <DatePicker
-        currentDate={datePickerData}
-        setCurrentDate={setDatePickerData}
         onPickDate={handleOnPickDate}
       />
-      <GantChart {...taskData}></GantChart>
       <Success />
     </>
   );

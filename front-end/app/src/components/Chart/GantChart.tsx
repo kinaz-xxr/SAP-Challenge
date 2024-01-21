@@ -10,7 +10,6 @@ const GantChart = (taskData : any) => {
 
   let table1 = taskData['table1']
 
-
   let tableColorMapper : any = {
     'compact' : lightBlue, 
     'medium' : blue, 
