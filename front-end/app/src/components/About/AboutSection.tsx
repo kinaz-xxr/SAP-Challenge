@@ -20,7 +20,7 @@ const AboutSection: React.FC = () => {
                 <p>Optimize Your Revenue</p>
             </div>
             <div className={styles.description}>
-                <p>Do you want to maximize your revenue from our car-washing business? We are here with state-of-the-art technology, using advanced algorithm to schedule your bookings with the aim to maximize revenue.</p>
+                <p>Do you want to maximize your revenue from our tire-changing business? We are here with state-of-the-art technology, using advanced algorithm to schedule your bookings with the aim to maximize revenue.</p>
             </div>
             <div className={styles.steps}>
                 <Button 
