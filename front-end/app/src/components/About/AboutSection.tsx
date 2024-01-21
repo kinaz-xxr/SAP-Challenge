@@ -7,6 +7,7 @@ import { useAppContext } from "../../context/AppContext";
 import UploadFile from "../Upload/UploadFile";
 import { useLoadingContext } from "../../context/LoadingContext";
 import Loading from "../Loading/Loading";
+import Schedule from "../../views/Schedule/Schedule";
 
 // Define the functional component
 const AboutSection: React.FC = () => {
@@ -31,7 +32,6 @@ const AboutSection: React.FC = () => {
                         setTimeout(() => {
                             setLoading(false);
                             setModalContent(<UploadFile />);
-                            console.log("Here");
                         }, 800);
                     }}
                 />
@@ -43,8 +43,7 @@ const AboutSection: React.FC = () => {
                         setModalContent(<Loading />);
                         setTimeout(() => {
                             setLoading(false);
-                            setModalContent(<UploadFile />);
-                            console.log("Here");
+                            setModalContent(<Schedule />);
                         }, 2000);
                     }}
                 />
