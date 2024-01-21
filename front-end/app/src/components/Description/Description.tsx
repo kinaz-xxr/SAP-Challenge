@@ -1,13 +1,12 @@
 
 import styles from "./Description.module.scss";
+import Footer from "../Footer/Footer";
 
-// component to upload the csv file
 const Description = () => {
 
   return (
-    <div>
-      Hi
-    </div>
+    
+    <Footer />
   );
 };
 

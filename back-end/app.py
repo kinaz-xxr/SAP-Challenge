@@ -14,6 +14,7 @@ import pandas as pd
 from models import db
 import numpy as np
 from datetime import datetime
+from predict_algo import iterateDay
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
