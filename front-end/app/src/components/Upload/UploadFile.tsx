@@ -7,6 +7,7 @@ import ServicesImpl from "../../services/services";
 import styles from "./UploadFile.module.scss";
 import { useSuccessContext } from "../../context/SuccessContext";
 import { useAppContext } from "../../context/AppContext";
+import Success from "../Success/Success";
 
 // component to upload the csv file
 const UploadFile = () => {
@@ -46,6 +47,9 @@ const UploadFile = () => {
           setSuccess(false);
           setShowModal(false);
         }, 2000); // show success component for 2 seconds
+
+        // the step 1 button becomes the success
+        
       })
       .catch((error) => {
         setProgress(0);
@@ -82,7 +86,7 @@ const UploadFile = () => {
           <div className={styles['text-above-button']}>
             <label htmlFor="csv_file">Import your .csv file for optimization:</label>
           </div>
-            <input id="csv_file" type="file" name="csv_file" accept=".csv" />
+            <input id="csv_file" type="file" name="csv_file" accept=".csv" onChange={handleUploadFile} />
           </div>
 
         <div className="col-4">
@@ -116,6 +120,8 @@ const UploadFile = () => {
           {message}
         </div>
       )}
+
+      <Success />
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import { useSuccessContext } from "../../context/SuccessContext";
-import styles from './Success.module.scss';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 
 // success component will be rendered -> when the file is uploaded successfully
 const Success = () => {
@@ -7,9 +8,10 @@ const Success = () => {
 
     return isSuccess ? (
         // render the success component in the modal
-        <div className="">
-
-        </div>
+        <Alert severity="success">
+            <AlertTitle>Success</AlertTitle>
+            Successfully 
+        </Alert>
     ) : null;
 };
 

@@ -17,13 +17,13 @@ export type setDate = (newDate: DatePickerData) => void;
 export type DatePickerProps = {
   currentDate: DatePickerData;
   setCurrentDate: setDate;
-  onPickDate: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  onPickDate: (e: any) => void;
 };
 
 const DatePicker = (props: DatePickerProps) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DemoItem label="Static variant">
+      <DemoItem label="Pick a date to view appointment">
         <StaticDatePicker
           defaultValue={dayjs("2022-10-01")}
           onChange={(newDate) => {
@@ -32,8 +32,11 @@ const DatePicker = (props: DatePickerProps) => {
             }
 
             const date: string = newDate.format("YYYY-MM-DD");
+            console.log(date);
             props.setCurrentDate({ ...props.currentDate, date });
+            console.log(props.currentDate);
           }}
+          onAccept={props.onPickDate}
         />
       </DemoItem>
     </LocalizationProvider>
