@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import React, { ChangeEvent, useState, useEffect, useCallback } from 'react';
 import { useLoadingContext } from "../../context/LoadingContext";
 import CircularProgress from "@mui/material/CircularProgress";
 import IFile from "../../types/file";
@@ -14,7 +14,7 @@ const UploadFile = () => {
   const [currentFile, setCurrentFile] = useState<File>();
   const [progress, setProgress] = useState<number>(0);
   const [message, setMessage] = useState<string>("");
-  const [fileInfo, setFileInfo] = useState<IFile>();
+  const [fileInfo, setFileInfo] = useState<IFile | undefined>(undefined); // Changed from IFile to IFile[] | undefined
   const { isLoading, setIsLoading, setLoading } = useLoadingContext();
   const { setSuccess } = useSuccessContext();
   const { setShowModal } = useAppContext();
@@ -23,9 +23,8 @@ const UploadFile = () => {
 
   const { fileUpload, getFiles } = services;
 
-  const handleUploadFile = (e: React.ChangeEvent<any>) => {
-    // when the user click -> upload file
-    const { files } = e.target;
+  const selectFile = (event: ChangeEvent<HTMLInputElement>) => {
+    const { files } = event.target;
     const selectedFiles = files as FileList;
     setCurrentFile(selectedFiles?.[0]);
     setProgress(0);
@@ -65,7 +64,7 @@ const UploadFile = () => {
         }
         setCurrentFile(undefined);
       });
-  }, [currentFile, setCurrentFile, setProgress, setMessage]);
+  }, [currentFile, setCurrentFile, setProgress, setMessage, fileUpload, setSuccess, setShowModal]);
 
   // when the file is uploaded -> get the files to update the file info
   useEffect(() => {
@@ -81,13 +80,12 @@ const UploadFile = () => {
 
   return (
     <div>
-      <div className={styles.UploadFile}>
-        <div className={styles.UploadFile__chooseFileButton}>
-          <div className={styles['text-above-button']}>
-            <label htmlFor="csv_file">Import your .csv file for optimization:</label>
-          </div>
-            <input id="csv_file" type="file" name="csv_file" accept=".csv" onChange={handleUploadFile} />
-          </div>
+      <div className="row">
+        <div className="col-8">
+          <label className="btn btn-default p-0">
+            <input type="file" onChange={selectFile} />
+          </label>
+        </div>
 
         <div className="col-4">
           <button
@@ -122,6 +120,14 @@ const UploadFile = () => {
       )}
 
       <Success />
+      <div className="card mt-3">
+        <div className="card-header">List of Files</div>
+        <ul className="list-group list-group-flush">
+          {fileInfo && 
+            <a href={fileInfo.url}>{fileInfo.name}</a>
+          }
+        </ul>
+      </div>
     </div>
   );
 };

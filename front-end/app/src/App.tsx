@@ -7,6 +7,7 @@ import Schedule from "./views/Schedule/Schedule";
 import AboutSection from "./components/About/AboutSection";
 import UploadFile from "./components/Upload/UploadFile";
 import Modal from "./components/Modal/Modal";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const App = () => {
   return (
