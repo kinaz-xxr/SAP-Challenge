@@ -23,7 +23,7 @@ const AboutSection: React.FC = () => {
             </div>
             <div className={styles.steps}>
                 <Button 
-                    label="Step 1. "
+                    label="Step 1 "
                     onClick={() => {
                         setShowModal(true);
                         setLoading(true);
@@ -36,7 +36,7 @@ const AboutSection: React.FC = () => {
                     }}
                 />
                 <Button 
-                    label="Step 2. "
+                    label="Step 2 "
                     onClick={() => {
                         setShowModal(true);
                         setLoading(true);
@@ -49,7 +49,7 @@ const AboutSection: React.FC = () => {
                     }}
                 />
                 <Button 
-                    label="Step 3. "
+                    label="Step 3 "
                     onClick={() => {
                         setShowModal(true);
                         setLoading(true);
