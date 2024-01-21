@@ -8,8 +8,6 @@ const Home = () => {
     return (
         <div className={styles.Home}>
             <AboutSection />
-            <UploadFile />
-            <Schedule />
         </div>
     );
 };

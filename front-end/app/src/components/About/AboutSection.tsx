@@ -35,8 +35,32 @@ const AboutSection: React.FC = () => {
                         }, 2000);
                     }}
                 />
-                <div className="step-items">Step 2. Check your schedule</div>
-                <div className="step-items">Step 3. Watch your revenue goes up!</div>
+                <Button 
+                    label="Step 2. "
+                    onClick={() => {
+                        setShowModal(true);
+                        setLoading(true);
+                        setModalContent(<Loading />);
+                        setTimeout(() => {
+                            setLoading(false);
+                            setModalContent(<UploadFile />);
+                            console.log("Here");
+                        }, 2000);
+                    }}
+                />
+                <Button 
+                    label="Step 3. "
+                    onClick={() => {
+                        setShowModal(true);
+                        setLoading(true);
+                        setModalContent(<Loading />);
+                        setTimeout(() => {
+                            setLoading(false);
+                            setModalContent(<UploadFile />);
+                            console.log("Here");
+                        }, 2000);
+                    }}
+                />
             </div>
             <Loading />
         </>
