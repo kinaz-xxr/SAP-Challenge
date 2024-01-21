@@ -9,7 +9,7 @@ export type ButtonProps = {
 
 const Button = (props: ButtonProps) => {
   return (
-    <button className={props.className ? props.className : styles.Button}>
+    <button className={props.className ? props.className : styles.Button} onClick={props.onClick}>
       {props.label}
     </button>
   );

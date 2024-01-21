@@ -39,3 +39,5 @@ const Modal = () => {
     </div>
   ) : null;
 };
+
+export default Modal;

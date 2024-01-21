@@ -5,6 +5,7 @@ import AppContextProvider from "./context/AppContext";
 import Schedule from "./components/Schedule/Schedule";
 import AboutSection from "./components/About/AboutSection";
 import UploadFile from "./components/Upload/UploadFile";
+import Modal from "./components/Modal/Modal";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
           } />
           <Route path="/schedule" element={<Schedule />} />
           </Routes>
+          <Modal />
         </LoadingContextProvider>
       </AppContextProvider>
     </Router>
