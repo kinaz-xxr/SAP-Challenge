@@ -5,7 +5,7 @@ import { createContext, useContext, useMemo, useState } from "react";
 interface ILoadingContext {
     isLoading: boolean;
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
-    setLoading: (value: any) => void;
+    setLoading: (value: boolean) => void;
 };
 
 export const LoadingContext = createContext<ILoadingContext>({
