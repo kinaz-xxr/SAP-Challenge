@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 import uuid
-
+from sqlalchemy import select
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -36,36 +36,46 @@ class AppointmentObject:
 
 
 
-class BayTable(Base): 
-    __tablename__ = 'BayTable-1'
-    id = db.Column(db.String(100), primary_key = True)
+class BaseTable(db.Model):
+    __abstract__ = True
+
+    id = db.Column(db.String(100), primary_key=True)
     dateBooked = db.Column(db.String(40))
     dateStartAppointment = db.Column(db.String(40))
     dateEndAppointment = db.Column(db.String(40))
     carType = db.Column(db.String(40))
-        
 
+# Create 10 tables with names BayTable1, BayTable2, ..., BayTable10
+for i in range(1, 11):
+    table_name = f'BayTable{i}'
+
+    # Define a class dynamically with the desired table name and inherit from BaseTable
+    class_name = f'BayTable{i}'
+    table_class = type(class_name, (BaseTable,), {'__tablename__': table_name})
     
+    # Add the class to the global namespace (optional)
+    globals()[class_name] = table_class
+    
+
+
+# Assuming the tables were dynamically created with names BayTable1, BayTable2, ..., BayTable10
+table_names = [f'BayTable{i}' for i in range(1, 11)]
+
+# Create a list to store Table objects for each table name
+tables = []
+
+# Query each table and print the results
 with app.app_context():
-    # print('run')
-    # db.engine.dialect.server_version_info = (23, 1, 14)
-    # db.create_all()
-    # test_data_object = AppointmentObject(str(uuid.uuid1()), '10/20/2022  6:30:00 PM', '11/23/2022  9:21:00 AM', 'compact')
-    # for i in range(1, 11):
-    #     BayTableCreator(f'BayTable-{i}')
+    for i in range(1, 11):
+        table_name = f'BayTable{i}'
+        table_class = globals().get(table_name)
 
-    # # test_data = BayTable(id = test_data_object.id, 
-    # #                     dateBooked = test_data_object.dateBooked, 
-    # #                     dateStartAppointment = test_data_object.dateStartAppointment, 
-    # #                     dateEndAppointment = test_data_object.dateEndAppointment, 
-    # #                     carType = test_data_object.carType)
-    # # db.session.add(test_data)
-    # db.session.commit()
-    table_dict = {}
-    for i in range(1,11):   # Create
-        table_name = "BayTable" + str(i)
-        table_dict[table_name] = BayTable(table_name)
-
+        if table_class:
+            query = table_class.query.all()
+            print(f"Results for {table_name}:")
+            for row in query:
+                print(row.__dict__)
+            print("\n")
 
 
 @app.route('/')
