@@ -1,13 +1,11 @@
 // data types
-type Data = {
-    bookDateTime: Date,
-    appointDateTime: Date,
+export type Data = {
+    bookingDateTime: string,
+    appointmentDateTime: string,
     carType: string,
 };
 
-type sendDataProps = {
+export type sendDataProps = {
     url: string,
-    data: Data,
+    data: Array<Data>
 };
-
-export default sendDataProps;
