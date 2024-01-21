@@ -27,34 +27,20 @@ class ServicesImpl implements Services {
       });
   }
 
-  async fileUpload(uploadFile: File, onUploadProgress: any): Promise<any> {
+  fileUpload(uploadFile: File, onUploadProgress: any): Promise<any> {
     let formData = new FormData();
 
     formData.append("file", uploadFile);
 
-    return http
-      .post("http://127.0.0.1:5000/upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        onUploadProgress,
-      })
-      .then((response) => {
-        console.log(`Successfully upload file: ${response}`);
-      })
-      .catch((error) => {
-        console.error(`Error when uploading the file: ${error}`);
-      });
+    return http.post("http://127.0.0.1:5000/upload", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      onUploadProgress,
+    });
   }
-  async getFiles(): Promise<any> {
-    return http
-      .get("http://127.0.0.1:5000/files")
-      .then((response) => {
-        console.log(`Successfully upload file: ${response}`);
-      })
-      .catch((error) => {
-        console.error(`Error when uploading the file: ${error}`);
-      });
+  getFiles(): Promise<any> {
+    return http.get("http://127.0.0.1:5000/files");
   }
 }
 
