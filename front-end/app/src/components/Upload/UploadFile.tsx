@@ -16,7 +16,7 @@ const UploadFile = () => {
   const [message, setMessage] = useState<string>("");
   const [fileInfo, setFileInfo] = useState<IFile | undefined>(undefined); // Changed from IFile to IFile[] | undefined
   const { isLoading, setIsLoading, setLoading } = useLoadingContext();
-  const { setSuccess } = useSuccessContext();
+  const { isSuccess, setSuccess } = useSuccessContext();
   const { setShowModal } = useAppContext();
 
   const services: Services = new ServicesImpl();
@@ -41,7 +41,9 @@ const UploadFile = () => {
       .then((file) => {
         setFileInfo(file);
         // success upload -> success component render
+        console.log(`Before upload successfully: ${isSuccess}`);
         setSuccess(true);
+        console.log(`Upload successfully: ${isSuccess}`);
         setTimeout(() => {
           setSuccess(false);
           setShowModal(false);
