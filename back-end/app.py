@@ -9,7 +9,6 @@ from models import RevenueLossTable, BayTable1, BayTable2, BayTable3, BayTable4,
 from sqlalchemy import func
 import uuid
 from models import RevenueLossTable, BayTable1, BayTable2, BayTable3, BayTable4, BayTable5, BayTable6, BayTable7, BayTable8, BayTable9, BayTable10
-from app import app, AppointmentObject
 from sqlalchemy import func
 import pandas as pd
 from models import db
@@ -135,7 +134,7 @@ def removeLastFromBay(table_name):
 
 def inputRevenueLoss(revenue : int, loss : int, date : str):
     print('in')
-    db.session.add(RevenueLossTable( revenue = revenue, loss=loss, date = date))
+    db.session.add(RevenueLossTable(id = str(uuid.uuid1()),  revenue = revenue, loss=loss, date = date))
     db.session.commit()
     db.session.close()
 
@@ -374,3 +373,16 @@ def schedule():
         }
 
     )
+with app.app_context:
+    db.session.query(BayTable1).delete()
+    db.session.query(BayTable2).delete()
+    db.session.query(BayTable3).delete()
+    db.session.query(BayTable4).delete()
+    db.session.query(BayTable5).delete()
+    db.session.query(BayTable6).delete()
+    db.session.query(BayTable7).delete()
+    db.session.query(BayTable8).delete()
+    db.session.query(BayTable9).delete()
+    db.session.query(BayTable10).delete()
+    db.session.query(RevenueLossTable).delete()
+    db.session.commit()

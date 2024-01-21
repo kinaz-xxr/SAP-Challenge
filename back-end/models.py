@@ -103,7 +103,8 @@ class BayTable10(db.Model):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 class RevenueLossTable(db.Model):
-    date = db.Column(db.String(40), primary_key=True)
+    id = db.Column(db.String(100), primary_key=True)
+    date = db.Column(db.String(40))
     revenue = db.Column(db.Integer)
     loss = db.Column(db.Integer)
     def to_dict(self):
