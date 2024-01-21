@@ -32,7 +32,7 @@ const AboutSection: React.FC = () => {
                             setLoading(false);
                             setModalContent(<UploadFile />);
                             console.log("Here");
-                        }, 2000);
+                        }, 800);
                     }}
                 />
                 <Button 

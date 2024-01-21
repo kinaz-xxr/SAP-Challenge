@@ -116,11 +116,6 @@ const UploadFile = () => {
           {message}
         </div>
       )}
-
-      <div className="card mt-3">
-        <div className="card-header">File uploaded</div>
-        {fileInfo && <a href={fileInfo.url}>{fileInfo.name}</a>}
-      </div>
     </div>
   );
 };
