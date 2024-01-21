@@ -5,7 +5,7 @@ import { createContext, useContext, useMemo, useState } from "react";
 interface ILoadingContext {
     isLoading: boolean;
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
-    setLoading: (value: any) => void;
+    setLoading: (value: boolean) => void;
 };
 
 export const LoadingContext = createContext<ILoadingContext>({
@@ -25,6 +25,7 @@ const LoadingContextProvider = (
     const setLoading = (value: boolean) => {
         try {
             setIsLoading(value);
+            console.log(`New loading: ${isLoading}`)
         } catch(error) {
             console.error(`Error changing loading state for the app: ${error}`);
         };

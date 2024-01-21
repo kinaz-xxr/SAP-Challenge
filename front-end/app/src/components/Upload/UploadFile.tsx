@@ -5,15 +5,18 @@ import IFile from "../../types/file";
 import Services from "../../services/services";
 import ServicesImpl from "../../services/services";
 import styles from "./UploadFile.module.scss";
-import { Data } from "../../types/data";
+import { useSuccessContext } from "../../context/SuccessContext";
+import { useAppContext } from "../../context/AppContext";
 
 // component to upload the csv file
 const UploadFile = () => {
   const [currentFile, setCurrentFile] = useState<File>();
   const [progress, setProgress] = useState<number>(0);
   const [message, setMessage] = useState<string>("");
-  const [fileInfos, setFileInfos] = useState<Array<IFile>>();
+  const [fileInfo, setFileInfo] = useState<IFile>();
   const { isLoading, setIsLoading, setLoading } = useLoadingContext();
+  const { setSuccess } = useSuccessContext();
+  const { setShowModal } = useAppContext();
 
   const services: Services = new ServicesImpl();
 
@@ -35,8 +38,14 @@ const UploadFile = () => {
     fileUpload(currentFile, (event: any) => {
       setProgress(Math.round((100 * event.loaded) / event.total));
     })
-      .then((files) => {
-        setFileInfos(files);
+      .then((file) => {
+        setFileInfo(file);
+        // success upload -> success component render
+        setSuccess(true);
+        setTimeout(() => {
+          setSuccess(false);
+          setShowModal(false);
+        }, 2000); // show success component for 2 seconds
       })
       .catch((error) => {
         setProgress(0);
@@ -58,7 +67,7 @@ const UploadFile = () => {
   useEffect(() => {
     getFiles()
       .then((response) => {
-        setFileInfos(response.data);
+        setFileInfo(response.data);
       })
       .catch((error) => {
         setMessage(error.response.data.message);
@@ -70,9 +79,10 @@ const UploadFile = () => {
     <div>
       <div className={styles.UploadFile}>
         <div className={styles.UploadFile__chooseFileButton}>
-          <label className="btn btn-default p-0">
-            <input type="file" onChange={handleUploadFile} />
-          </label>
+          <div className={styles['text-above-button']}>
+            <label htmlFor="csv_file">Import your .csv file for optimization:</label>
+          </div>
+            <input id="csv_file" type="file" name="csv_file" accept="image/png, image/jpeg" />
         </div>
 
         <div className="col-4">
@@ -108,15 +118,8 @@ const UploadFile = () => {
       )}
 
       <div className="card mt-3">
-        <div className="card-header">List of Files</div>
-        <ul className="list-group list-group-flush">
-          {fileInfos &&
-            fileInfos.map((file, index) => (
-              <li className="list-group-item" key={index}>
-                <a href={file.url}>{file.name}</a>
-              </li>
-            ))}
-        </ul>
+        <div className="card-header">File uploaded</div>
+        {fileInfo && <a href={fileInfo.url}>{fileInfo.name}</a>}
       </div>
     </div>
   );
