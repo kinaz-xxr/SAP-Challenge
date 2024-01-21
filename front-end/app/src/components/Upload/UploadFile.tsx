@@ -82,8 +82,8 @@ const UploadFile = () => {
           <div className={styles['text-above-button']}>
             <label htmlFor="csv_file">Import your .csv file for optimization:</label>
           </div>
-            <input id="csv_file" type="file" name="csv_file" accept="image/png, image/jpeg" />
-        </div>
+            <input id="csv_file" type="file" name="csv_file" accept=".csv" />
+          </div>
 
         <div className="col-4">
           <button
