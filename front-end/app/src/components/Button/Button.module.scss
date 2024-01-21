@@ -1,10 +1,12 @@
 .Button {
-    opacity: 50%;
+    justify-items: center;
+    color: white;
+    opacity: 80%;
     background-color: grey;
     max-width: 10vw;
     max-height: 10vh;
-    justify-items: center;
     border-radius: 16px;
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.13) 68.53%);
     backdrop-filter: blur(16px);
+    padding: 25px 45px;
 }
