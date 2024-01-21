@@ -9,6 +9,7 @@ import ServicesImpl, { Services } from "../../services/services";
 import { useAppContext } from "../../context/AppContext";
 import { useSuccessContext } from "../../context/SuccessContext";
 import Success from "../../components/Success/Success";
+import GantChart from "../../components/Chart/GantChart";
 
 const Schedule = () => {
   const [datePickerData, setDatePickerData] = React.useState<DatePickerData>({
@@ -17,6 +18,8 @@ const Schedule = () => {
 
   const { setShowModal } = useAppContext();
   const { setSuccess } = useSuccessContext();
+
+  const [taskData, setTaskData] = useState({})
 
   const services: Services = new ServicesImpl();
 
@@ -33,6 +36,8 @@ const Schedule = () => {
             setSuccess(false);
             setShowModal(false);
           }, 2000);
+
+          setTaskData(response)
         })
         .catch((error) => {
           throw new Error(`Error with pick date: ${error}`);
@@ -48,6 +53,7 @@ const Schedule = () => {
         setCurrentDate={setDatePickerData}
         onPickDate={handleOnPickDate}
       />
+      <GantChart {...taskData}></GantChart>
       <Success />
     </>
   );

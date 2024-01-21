@@ -9,6 +9,7 @@ import { useLoadingContext } from "../../context/LoadingContext";
 import Loading from "../Loading/Loading";
 import Schedule from "../../views/Schedule/Schedule";
 
+
 // Define the functional component
 const AboutSection: React.FC = () => {
     const { setModalContent, setShowModal } = useAppContext();
