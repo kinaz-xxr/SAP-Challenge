@@ -18,7 +18,7 @@ const DateContextProvider = (
     const [currentDate, setCurrentDate] = useState<string>("2022-10-01");
     const setDate = (newValue: string) => {
         try {
-            setCurrentDate(currentDate);
+            setCurrentDate(newValue);
         } catch(error) {
             console.error(`Error: ${error}`);
         }

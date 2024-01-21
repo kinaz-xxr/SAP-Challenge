@@ -8,6 +8,8 @@ import UploadFile from "../../views/Upload/UploadFile";
 import { useLoadingContext } from "../../context/LoadingContext";
 import Loading from "../Loading/Loading";
 import Schedule from "../../views/Schedule/Schedule";
+import LinearChart from "../LinearChart/LinearChart";
+import ReportLineChart from "../../views/Report/ReportLineChart";
 
 // Define the functional component
 const AboutSection: React.FC = () => {
@@ -59,7 +61,7 @@ const AboutSection: React.FC = () => {
             setModalContent(<Loading />);
             setTimeout(() => {
               setLoading(false);
-              setModalContent(<UploadFile />);
+              setModalContent(<ReportLineChart />);
               console.log("Here");
             }, 2000);
           }}

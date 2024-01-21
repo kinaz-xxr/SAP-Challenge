@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import LinearChart from "../../components/LinearChart/LinearChart";
 import { useDateContext } from "../../context/DateContext";
 import ServicesImpl, { Services } from "../../services/services";
@@ -10,7 +10,8 @@ const ReportLineChart = () => {
     const services: Services = new ServicesImpl();
     let actualRevenue: number[] = [];
     let lostRevenue: number[] = [];
-    const getRevenue = React.useCallback(async() => {
+    
+    useEffect(() => {
         services.getRevenue({
             url: "http://127.0.0.1:5000/revenue",
             date: currentDate,
@@ -27,7 +28,8 @@ const ReportLineChart = () => {
             console.error(`Error: ${error}`);
             throw new Error(error);
         })
-    }, []);
+    }, [currentDate, actualRevenue, lostRevenue, services]);
+
   return (
     <div>
       <LinearChart 

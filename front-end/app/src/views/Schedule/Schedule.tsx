@@ -1,19 +1,15 @@
 // Import necessary dependencies
 import React, { useCallback, useState } from "react";
 import styles from "./Schedule.module.scss";
-import DatePicker, {
-  DatePickerData,
-  defaultDatePickerData,
-} from "../../components/DatePicker/DatePicker";
+import DatePicker from "../../components/DatePicker/DatePicker";
 import ServicesImpl, { Services } from "../../services/services";
 import { useAppContext } from "../../context/AppContext";
 import { useSuccessContext } from "../../context/SuccessContext";
 import Success from "../../components/Success/Success";
+import { useDateContext } from "../../context/DateContext";
 
 const Schedule = () => {
-  const [datePickerData, setDatePickerData] = React.useState<DatePickerData>({
-    ...defaultDatePickerData,
-  });
+  const { currentDate, setCurrentDate } = useDateContext();
 
   const { setShowModal } = useAppContext();
   const { setSuccess } = useSuccessContext();
@@ -25,7 +21,7 @@ const Schedule = () => {
       services
         .postDate({
           url: "http://127.0.0.1:5000/schedule",
-          date: datePickerData,
+          date: currentDate,
         })
         .then((response) => {
           setSuccess(true);
@@ -38,14 +34,12 @@ const Schedule = () => {
           throw new Error(`Error with pick date: ${error}`);
         });
     },
-    [datePickerData, setDatePickerData, defaultDatePickerData]
+    [currentDate, setCurrentDate]
   );
 
   return (
     <>
       <DatePicker
-        currentDate={datePickerData}
-        setCurrentDate={setDatePickerData}
         onPickDate={handleOnPickDate}
       />
       <Success />
