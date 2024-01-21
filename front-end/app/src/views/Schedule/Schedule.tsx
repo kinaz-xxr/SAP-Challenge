@@ -6,7 +6,6 @@ import ServicesImpl, { Services } from "../../services/services";
 import { useAppContext } from "../../context/AppContext";
 import { useSuccessContext } from "../../context/SuccessContext";
 
-
 const Schedule = () => {
     const [datePickerData, setDatePickerData] = React.useState<DatePickerData>({
         ...defaultDatePickerData
@@ -16,7 +15,6 @@ const Schedule = () => {
     const { setSuccess } = useSuccessContext();
 
     const services: Services = new ServicesImpl();
-
 
     const handleOnPickDate = useCallback(async (e: any) => {
         e.preventDefault();
